@@ -2,7 +2,6 @@
 
 Board::Board()
 {
-	Piece* Square[8][8];
 	Square[0][0] = new Piece(5, 1);
 	Square[0][1] = new Piece(2, 1);
 	Square[0][2] = new Piece(3, 1);
@@ -47,19 +46,26 @@ Board::Board()
 
 	for (int file = 0; file < 8; file++) {
 		for (int rank = 0; rank < 8; rank++) {
-			bool isLightSquere = (file + rank) % 2 == 0;			// if squere is White / Light variable is equal 1, else is equal 0
-			int squareColour = (isLightSquere);
-
 			Square[file][rank]->printType();
 
-
 			std::cout << " | ";
- 		}
-		std::cout << std::endl;
-		std::cout << "------------------------------------" << std::endl;
+		}
+		std::cout << std::endl << "---------------------------------" << std::endl;
 	}
 }
 
 Board::~Board()
 {
+}
+
+void Board::printBoard()
+{
+	for (int file = 0; file < 8; file++) {
+		for (int rank = 0; rank < 8; rank++) {
+			Square[file][rank]->printType();
+
+			std::cout << " | ";
+		}
+		std::cout << std::endl << "---------------------------------" << std::endl;
+	}
 }

@@ -1,6 +1,8 @@
 #include "Board.h"
-#include "Piece.h"
+#include "Move.h"
 
 int main() {
 	Board myBoard;
+	Move myMove;
+
 }

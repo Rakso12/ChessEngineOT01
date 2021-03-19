@@ -2,56 +2,6 @@
 
 Board::Board()
 {
-	Square[0][0] = new Piece(5, 1);
-	Square[0][1] = new Piece(2, 1);
-	Square[0][2] = new Piece(3, 1);
-	Square[0][3] = new Piece(6, 1);
-	Square[0][4] = new Piece(4, 1);
-	Square[0][5] = new Piece(3, 1);
-	Square[0][6] = new Piece(2, 1);
-	Square[0][7] = new Piece(5, 1);
-
-	Square[1][0] = new Piece(1, 1);
-	Square[1][1] = new Piece(1, 1);
-	Square[1][2] = new Piece(1, 1);
-	Square[1][3] = new Piece(1, 1);
-	Square[1][4] = new Piece(1, 1);
-	Square[1][5] = new Piece(1, 1);
-	Square[1][6] = new Piece(1, 1);
-	Square[1][7] = new Piece(1, 1);
-
-	Square[6][0] = new Piece(1, 0);
-	Square[6][1] = new Piece(1, 0);
-	Square[6][2] = new Piece(1, 0);
-	Square[6][3] = new Piece(1, 0);
-	Square[6][4] = new Piece(1, 0);
-	Square[6][5] = new Piece(1, 0);
-	Square[6][6] = new Piece(1, 0);
-	Square[6][7] = new Piece(1, 0);
-
-	Square[7][0] = new Piece(5, 0);
-	Square[7][1] = new Piece(2, 0);
-	Square[7][2] = new Piece(3, 0);
-	Square[7][3] = new Piece(6, 0);
-	Square[7][4] = new Piece(4, 0);
-	Square[7][5] = new Piece(3, 0);
-	Square[7][6] = new Piece(2,	0);
-	Square[7][7] = new Piece(5, 0);
-
-	for (int i = 2; i < 6; i ++) {
-		for (int j = 0; j < 8; j++) {
-			Square[i][j] = new Piece(0, 2);
-		}
-	}
-
-	for (int file = 0; file < 8; file++) {
-		for (int rank = 0; rank < 8; rank++) {
-			Square[file][rank]->printType();
-
-			std::cout << " | ";
-		}
-		std::cout << std::endl << "---------------------------------" << std::endl;
-	}
 }
 
 Board::~Board()
@@ -60,12 +10,71 @@ Board::~Board()
 
 void Board::printBoard()
 {
+	std::cout << "Current board\n  ------------------------------- " << std::endl;
+	for (int file = 0; file < 8; file++) {
+		std::cout << " | ";
+		for (int rank = 0; rank < 8; rank++) {
+			std::cout << board[rank][file] << " | ";
+		}
+		std::cout << std::endl << "  -------------------------------" << std::endl;
+	}
+}
+
+void Board::InitDefaultBoardSettings()
+{
+	char defaultBoardSetting[8][8] = {
+		{ 'r', 'p', '0', '0', '0', '0', 'P', 'R'},
+		{ 'h', 'p', '0', '0', '0', '0', 'P', 'H'},
+		{ 'b', 'p', '0', '0', '0', '0', 'P', 'B'},
+		{ 'q', 'p', '0', '0', '0', '0', 'P', 'Q'},
+		{ 'k', 'p', '0', '0', '0', '0', 'P', 'K'},
+		{ 'b', 'p', '0', '0', '0', '0', 'P', 'B'},
+		{ 'h', 'p', '0', '0', '0', '0', 'P', 'H'},
+		{ 'r', 'p', '0', '0', '0', '0', 'P', 'R'},
+	};
+
+	copyBoard(defaultBoardSetting, board);
+}
+
+char Board::getPieceAtPosition(int file, int rank)
+{
+	if (file < 8 && file >= 0 && rank < 8 && rank >= 0) {
+		char pieceAtPosition = board[file][rank];
+		return pieceAtPosition;
+	}
+	else
+	{
+		std::cout << "Wrong file or rank in getPieceAtPosition() function." << std::endl;
+		return '0';
+	}
+}
+
+void Board::setPieceAtPosition(int file, int rank, char piece)
+{
+	if (file < 8 && file >= 0 && rank < 8 && rank >= 0) {
+		board[file][rank] = piece;
+	}
+	else
+	{
+		std::cout << "Wrong file or rank in setPieceAtPosition() function." << std::endl;
+	}
+}
+
+EnumColor Board::getPieceColour(char pieceType)
+{
+	if(pieceType > 'a' && pieceType < 'z')
+		return EnumColor::Black;	
+	else if (pieceType >= 'A' && pieceType < 'Z')
+		return EnumColor::White;
+	else
+		return EnumColor::None;
+}
+
+void Board::copyBoard(char from[8][8], char to[8][8])
+{
 	for (int file = 0; file < 8; file++) {
 		for (int rank = 0; rank < 8; rank++) {
-			Square[file][rank]->printType();
-
-			std::cout << " | ";
+			to[file][rank] = from[file][rank];
 		}
-		std::cout << std::endl << "---------------------------------" << std::endl;
 	}
 }

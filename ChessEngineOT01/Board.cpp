@@ -60,7 +60,39 @@ void Board::setPieceAtPosition(int file, int rank, char piece)
 	}
 }
 
-EnumColor Board::getPieceColour(char pieceType)
+bool Board::captureIsAvaiable(int file_from, int rank_from, int file_to, int rank_to)
+{
+	char pieceFrom = getPieceAtPosition(file_from, rank_from);
+	char pieceTo = getPieceAtPosition(file_to, rank_to);
+	EnumColor pieceFromColor = getPieceColor(pieceFrom);
+	EnumColor pieceToColor = getPieceColor(pieceTo);
+
+	if ((pieceFrom != '0' || pieceTo != '0') && pieceFromColor != pieceToColor)
+		return true;
+	else
+		return false;
+}
+
+void Board::boardInverse()
+{
+	char inversedBoard[8][8] = {};
+
+	for (int file = 0; file < 8; file++)
+	{
+		for (int rank = 0; rank < 8; rank++) {
+			inversedBoard[file][rank] = this->board[file][7-rank];
+		}
+	}
+
+	for (int file = 0; file < 8; file++)
+	{
+		for (int rank = 0; rank < 8; rank++) {
+			board[file][rank] = inversedBoard[file][rank];
+		}
+	}
+}
+
+EnumColor Board::getPieceColor(char pieceType)
 {
 	if(pieceType > 'a' && pieceType < 'z')
 		return EnumColor::Black;	
